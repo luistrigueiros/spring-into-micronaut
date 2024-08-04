@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: SpringMicronaut
+
+greeting:
+  template: "Hola, %s!"
