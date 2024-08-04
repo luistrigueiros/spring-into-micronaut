@@ -7,14 +7,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication
 @EnableMicronaut
-public class SpringmicronautApplication {
+public class SpringMicronautApplication {
 
 	public static void main(String[] args) {
-		var builder = new SpringApplicationBuilder();
-		var context = new MicronautApplicationContext();
+        var context = new MicronautApplicationContext();
 		context.start();
-		builder.parent(context)
-				.sources(SpringmicronautApplication.class)
+		new SpringApplicationBuilder().parent(context)
+				.sources(SpringMicronautApplication.class)
 				.build()
 				.run();
 	}
