@@ -1,15 +1,18 @@
 package com.example.springmicronaut;
 
+
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.junit.jupiter.api.function.Executable;
+
+import jakarta.validation.ConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringJUnitConfig(classes = {GreetingService.class, GreetingConfiguration.class})
-class GreetingServiceMicronautTest {
+@MicronautTest(startApplication = false)
+class GreetingServiceTest {
 
     @Inject
     GreetingService greetingService;
@@ -17,6 +20,7 @@ class GreetingServiceMicronautTest {
     @Test
     void regexValidationNonDigitsWork() {
         assertDoesNotThrow(() -> greetingService.greeting("foo"));
-        assertThrows(ConstraintViolationException.class, () -> greetingService.greeting("12foo"));
+        Executable e = () -> greetingService.greeting("12foo");
+        assertThrows(ConstraintViolationException.class, e);
     }
 }

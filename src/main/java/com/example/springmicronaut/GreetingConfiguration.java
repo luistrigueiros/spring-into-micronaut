@@ -1,12 +1,19 @@
 package com.example.springmicronaut;
 
-import io.micronaut.context.annotation.ConfigurationProperties;
-import io.micronaut.core.bind.annotation.Bindable;
-import jakarta.validation.constraints.NotBlank;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-@ConfigurationProperties("greeting") // <2>
-public interface GreetingConfiguration {
-    @Bindable(defaultValue = "Hello, %s!")
-    @NotBlank
-    String getTemplate();
+@Component
+@ConfigurationProperties("greeting")
+public class GreetingConfiguration {
+
+    private String template = "Hello, %s!";
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 }

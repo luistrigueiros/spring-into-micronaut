@@ -1,14 +1,14 @@
 package com.example.springmicronaut;
 
-import io.micronaut.context.annotation.Bean;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-@Bean
+@Service
 @Validated
 public class GreetingService {
 

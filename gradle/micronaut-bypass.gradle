@@ -1,0 +1,20 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
+    annotationProcessor(platform("io.micronaut.platform:micronaut-platform:$micronautVersion"))
+
+    annotationProcessor("io.micronaut.spring:micronaut-spring-annotation")
+    annotationProcessor("io.micronaut.spring:micronaut-spring-web-annotation")
+    annotationProcessor("io.micronaut.spring:micronaut-spring-boot-annotation")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    runtimeOnly("io.micronaut.spring:micronaut-spring-web")
+    runtimeOnly("io.micronaut.spring:micronaut-spring-boot")
+
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+}
