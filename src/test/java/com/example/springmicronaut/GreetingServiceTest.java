@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringJUnitConfig(classes = {GreetingService.class, GreetingConfiguration.class})
-class GreetingServiceMicronautTest {
+class GreetingServiceTest {
 
     @Inject
     GreetingService greetingService;
