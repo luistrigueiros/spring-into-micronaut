@@ -1,13 +1,12 @@
 package com.example.springmicronaut;
 
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.*;
 import jakarta.validation.constraints.Pattern;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
 
-@RestController // <1>
+import java.util.Map;
+
+@Controller // <1>
 public class GreetingController {
 
     private final GreetingService greetingService;
@@ -16,28 +15,27 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @GetMapping("/greeting") // <3>
+    @Get("/greeting") // <3>
     public Greeting greeting(
-            @RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {  // <4>
+            @QueryValue(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {  // <4>
         return greetingService.greeting(name);
     }
 
-    @PostMapping("/greeting") // <5>
-    public Greeting greetingByPost(@RequestBody Greeting greeting) { // <6>
+    @Post("/greeting") // <5>
+    public Greeting greetingByPost(@Body Greeting greeting) { // <6>
         return greetingService.greeting(greeting.getContent());
     }
 
-    @DeleteMapping("/greeting") // <7>
-    public ResponseEntity<?> deleteGreeting() { // <8>
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("Foo", "Bar");
-        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT); // <8>
+    @Delete("/greeting") // <7>
+    public HttpResponse<?> deleteGreeting() { // <8>
+        Map<CharSequence, CharSequence> headers = Map.of("Foo", "Bar");
+        return HttpResponse.noContent().headers(headers);
     }
 
-    @GetMapping("/greeting-status") // <3>
-    @ResponseStatus(code = HttpStatus.CREATED) // <9>
-    public Greeting greetingWithStatus(
-            @RequestParam(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
-        return greetingService.greeting(name);
+    @Get("/greeting-status") // <3>
+    public HttpResponse<Greeting> greetingWithStatus(
+            @QueryValue(value="name", defaultValue="World") @Pattern(regexp = "\\D+") String name) {
+        Greeting greeting = greetingService.greeting(name);
+        return HttpResponse.created(greeting);
     }
 }
